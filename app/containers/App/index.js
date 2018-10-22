@@ -16,6 +16,7 @@ import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import ProtectedRoute from 'components/ProtectedRoute';
 import UserDataForm from '../UserDataForm';
 
 const AppWrapper = styled.div`
@@ -40,7 +41,11 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
-        <Route path="/form" component={UserDataForm} />
+        <ProtectedRoute
+          path="/form"
+          component={UserDataForm}
+          redirectCondition={false}
+        />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />
