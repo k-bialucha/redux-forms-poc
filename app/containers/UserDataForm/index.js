@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form/immutable'; // <--- immutable import
+import { Route } from 'react-router-dom';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -18,6 +19,7 @@ import reducer from './reducer';
 import saga from './saga';
 
 import { sendDataForm } from './actions';
+import VerifyAction from './LinkAction';
 
 /* eslint-disable jsx-a11y/label-has-for */
 const renderField = ({ input, label, type }) => (
@@ -38,24 +40,36 @@ renderField.propTypes = {
 const UserDataForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
   return (
-    <form onSubmit={handleSubmit}>
-      <Field
-        name="username"
-        type="text"
-        component={renderField}
-        label="Username"
-      />
-      <Field name="email" type="email" component={renderField} label="Email" />
-      <Field name="age" type="number" component={renderField} label="Age" />
-      <div>
-        <button type="button" onClick={handleSubmit} disabled={submitting}>
-          Submit
-        </button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>
-          Clear Values
-        </button>
-      </div>
-    </form>
+    <div>
+      <Route path="/form/verify/:code/:email" component={VerifyAction} />
+      <form onSubmit={handleSubmit}>
+        <Field
+          name="username"
+          type="text"
+          component={renderField}
+          label="Username"
+        />
+        <Field
+          name="email"
+          type="email"
+          component={renderField}
+          label="Email"
+        />
+        <Field name="age" type="number" component={renderField} label="Age" />
+        <div>
+          <button type="button" onClick={handleSubmit} disabled={submitting}>
+            Submit
+          </button>
+          <button
+            type="button"
+            disabled={pristine || submitting}
+            onClick={reset}
+          >
+            Clear Values
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
