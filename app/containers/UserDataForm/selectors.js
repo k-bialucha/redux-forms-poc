@@ -1,31 +1,31 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
-
+// import { initialState } from 'redux-form/immutable';
 /**
  * Direct selector to the userDataForm state domain
  */
 
-const selectUserDataFormDomain = state => state.get('form', initialState);
+const selectDataDomain = state => state.get('userDataForm', initialState);
 
-/**
- * Other specific selectors
- */
+const makeSelectStep = () =>
+  createSelector(selectDataDomain, substate => substate.toJS().userData);
 
-/**
- * Default selector used by UserDataForm
- */
+// -----------------------------------------------------------------
 
-const makeSelectUserDataForm = () =>
-  createSelector(
-    selectUserDataFormDomain,
-    substate => substate.toJS().userData,
-  );
+const selectFormDomain = state => state.get('form');
 
-const makeSelectUserDataFormValues = () =>
-  createSelector(
-    selectUserDataFormDomain,
-    substate => substate.toJS().userData,
-  );
+const makeSelectForm = () =>
+  createSelector(selectFormDomain, substate => substate.toJS().userData);
 
-export default makeSelectUserDataFormValues;
-export { selectUserDataFormDomain, makeSelectUserDataForm };
+const makeSelectFormValues = () =>
+  createSelector(selectFormDomain, substate => {
+    const form = substate.toJS();
+    return form.userData ? form.userData.values : {};
+  });
+
+export {
+  selectDataDomain,
+  makeSelectForm,
+  makeSelectFormValues,
+  makeSelectStep,
+};

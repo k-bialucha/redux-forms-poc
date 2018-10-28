@@ -7,17 +7,15 @@ const ProtectedRoute = ({
   redirectCondition,
   path,
   ...rest
-}) => {
-  return (
-    <Route
-      path={path}
-      {...rest}
-      render={props =>
-        redirectCondition ? <Redirect to="/" /> : <Comp {...props} />
-      }
-    />
-  );
-};
+}) => (
+  <Route
+    path={path}
+    {...rest}
+    render={props =>
+      redirectCondition ? <Redirect to="/" /> : <Comp {...props} />
+    }
+  />
+);
 
 ProtectedRoute.propTypes = {
   component: PropTypes.element.isRequired,

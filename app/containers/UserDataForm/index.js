@@ -13,9 +13,9 @@ import { Field, reduxForm } from 'redux-form/immutable'; // <--- immutable impor
 import { Route } from 'react-router-dom';
 
 import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import makeSelectUserDataForm from './selectors';
-import reducer from './reducer';
+// import injectReducer from 'utils/injectReducer';
+import { makeSelectFormValues } from './selectors';
+// import reducer from './reducer';
 import saga from './saga';
 
 import { sendDataForm } from './actions';
@@ -38,7 +38,7 @@ renderField.propTypes = {
 };
 
 const UserDataForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props;
+  const { handleSubmit, pristine, reset } = props;
   return (
     <div>
       <Route path="/form/verify/:code/:email" component={VerifyAction} />
@@ -57,14 +57,10 @@ const UserDataForm = props => {
         />
         <Field name="age" type="number" component={renderField} label="Age" />
         <div>
-          <button type="button" onClick={handleSubmit} disabled={submitting}>
+          <button type="button" onClick={handleSubmit}>
             Submit
           </button>
-          <button
-            type="button"
-            disabled={pristine || submitting}
-            onClick={reset}
-          >
+          <button type="button" disabled={pristine} onClick={reset}>
             Clear Values
           </button>
         </div>
@@ -77,11 +73,10 @@ UserDataForm.propTypes = {
   handleSubmit: PropTypes.func,
   reset: PropTypes.func,
   pristine: PropTypes.bool,
-  submitting: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
-  selectedData: makeSelectUserDataForm(),
+  formValues: makeSelectFormValues(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -95,12 +90,12 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'userDataForm', reducer });
+// const withReducer = injectReducer({ key: 'userData', reducer });
 const withSaga = injectSaga({ key: 'userDataForm', saga });
 const withReduxForm = reduxForm({ form: 'userData' });
 
 export default compose(
-  withReducer,
+  // withReducer,
   withSaga,
   withConnect,
   withReduxForm,
