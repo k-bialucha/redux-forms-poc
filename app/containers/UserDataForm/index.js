@@ -14,7 +14,7 @@ import { Route } from 'react-router-dom';
 
 import injectSaga from 'utils/injectSaga';
 // import injectReducer from 'utils/injectReducer';
-import { makeSelectFormValues } from './selectors';
+import { makeSelectFormValues } from 'utils/common/selectors';
 // import reducer from './reducer';
 import saga from './saga';
 
@@ -76,7 +76,7 @@ UserDataForm.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  formValues: makeSelectFormValues(),
+  formValues: makeSelectFormValues('userData'),
 });
 
 function mapDispatchToProps(dispatch) {

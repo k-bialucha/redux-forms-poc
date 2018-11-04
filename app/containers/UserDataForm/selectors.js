@@ -12,20 +12,4 @@ const makeSelectStep = () =>
 
 // -----------------------------------------------------------------
 
-const selectFormDomain = state => state.get('form');
-
-const makeSelectForm = () =>
-  createSelector(selectFormDomain, substate => substate.toJS().userData);
-
-const makeSelectFormValues = () =>
-  createSelector(selectFormDomain, substate => {
-    const form = substate.toJS();
-    return form.userData ? form.userData.values : {};
-  });
-
-export {
-  selectDataDomain,
-  makeSelectForm,
-  makeSelectFormValues,
-  makeSelectStep,
-};
+export { selectDataDomain, makeSelectStep };
