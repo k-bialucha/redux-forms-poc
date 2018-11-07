@@ -11,6 +11,8 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
+import staticRoutes from 'staticPages';
+
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
@@ -40,13 +42,14 @@ export default function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
+        {staticRoutes}
         <Route path="/features" component={FeaturePage} />
         <ProtectedRoute
           path="/form"
           component={UserDataForm}
           redirectCondition={false}
         />
-        <Route path="" component={NotFoundPage} />
+        <Route component={NotFoundPage} />
       </Switch>
       <Footer />
     </AppWrapper>
